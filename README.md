@@ -11,7 +11,7 @@ O objetivo é desenvolver um pequeno sistema de gerenciamento de tarefas, aplica
 - Pytest (para testes)
 - GitHub Actions (para automação)
 
-## 📋 Estrutura inicial
+## Estrutura inicial
 
 
 ## Metodologia usada
