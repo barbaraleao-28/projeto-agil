@@ -20,14 +20,14 @@ jobs:
           # Adiciona flake8 para validação de qualidade do código
           pip install flask pytest flake8 
 
-    - name: 1. Rodar Testes
+    - name: Rodar Testes
   run: |
     # Agora o pytest vai procurar testes apenas no diretório /tests
     pytest tests/
           
       # Novo Passo Adicionado: Validação de Qualidade
-      - name: 2. Validar Qualidade do Código (Flake8)
-        run: |
-          # O Flake8 verifica problemas de estilo, sintaxe e complexidade
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # Se o flake8 encontrar erros, o passo falhará, garantindo a qualidade.
+      - name: Validar Qualidade do Código (Flake8)
+  run: |
+    # Flake8 deve olhar tanto src/ quanto tests/
+    flake8 src/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
+    flake8 src/ tests/ --count --max-complexity=10 --max-line-length=127 --exit-zero
