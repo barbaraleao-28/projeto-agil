@@ -1,34 +1,43 @@
 name: Python Tests
 
+# Dispara o workflow em todo push para qualquer branch
 on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Baixar código
+      # Passo 1: Baixar o código do repositório
+      - name: 1. Checkout do Código
         uses: actions/checkout@v3
 
-      - name: Configurar Python
+      # Passo 2: Configurar o ambiente Python
+      - name: 2. Configurar Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: Instalar dependências (incluindo linter)
+      # Passo 3: Instalar Dependências e o Projeto (Solução para Importação)
+      - name: 3. Instalar Dependências e Projeto (Pacote 'src')
         run: |
-          # Adiciona flake8 para validação de qualidade do código
-          pip install flask pytest flake8 
-
-          - name: 1. Rodar Testes
-  run: |
-    # Comando ajustado: Adiciona a pasta 'src' ao caminho do Python ANTES de rodar os testes
-    # O Python -m é essencial para encontrar o pytest
-    PYTHONPATH=src python -m pytest tests/
+          python -m pip install --upgrade pip
+          # Instala as dependências do requirements.txt
+          pip install -r requirements.txt
+          pip install pytest flake8
           
-      # Novo Passo Adicionado: Validação de Qualidade
-      - name: Validar Qualidade do Código (Flake8)
-  run: |
-    # Flake8 deve olhar tanto src/ quanto tests/
-    flake8 src/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
-    flake8 src/ tests/ --count --max-complexity=10 --max-line-length=127 --exit-zero
+          # CRUCIAL: Instala a pasta 'src' como um pacote editável, 
+          # permitindo que o Pytest importe 'src.app'
+          pip install -e src/ 
+
+      # Passo 4: Rodar os Testes Automatizados (Pytest)
+      - name: 4. Rodar Testes Automatizados (Pytest)
+        run: |
+          # Executa todos os testes na pasta 'tests/'
+          pytest tests/ 
+
+      # Passo 5: Validar Qualidade do Código (Flake8)
+      - name: 5. Validar Qualidade do Código (Flake8)
+        run: |
+          # O Flake8 verifica por erros e complexidade em src/ e tests/
+          flake8 src/ tests/ --count --max-complexity=10 --max-line-length=127 --exit-zero
