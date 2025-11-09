@@ -20,10 +20,11 @@ jobs:
           # Adiciona flake8 para validação de qualidade do código
           pip install flask pytest flake8 
 
-    - name: Rodar Testes
+          - name: 1. Rodar Testes
   run: |
-    # Agora o pytest vai procurar testes apenas no diretório /tests
-    pytest tests/
+    # Comando ajustado: Adiciona a pasta 'src' ao caminho do Python ANTES de rodar os testes
+    # O Python -m é essencial para encontrar o pytest
+    PYTHONPATH=src python -m pytest tests/
           
       # Novo Passo Adicionado: Validação de Qualidade
       - name: Validar Qualidade do Código (Flake8)
