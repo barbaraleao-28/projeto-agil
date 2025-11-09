@@ -1,11 +1,16 @@
 import pytest
-from seu_app import app # Ajuste 'seu_app' para o nome do seu arquivo principal do Flask (ex: app.py)
+import sys
+import os
+
+# Adiciona a pasta 'src' ao caminho de importação do Python
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+# Importa o app do seu arquivo app.py
+from src.app import app 
 
 @pytest.fixture
 def client():
-    # Esta linha coloca o Flask em modo de teste
+    # ... (Resto do código do fixture)
     app.config['TESTING'] = True
-    
-    # Cria um cliente de teste que pode fazer requisições (GET, POST, etc.)
     with app.test_client() as client:
-        yield client # O cliente é retornado para ser usado nos testes
+        yield client
