@@ -33,27 +33,34 @@ Foi usada nesse projeto uma abordagem Kanban conforme solicitada, com as seguint
 ---
 
 ## Mudança de Escopo
+No desenvolvimento do sistema de gerenciamento de tarefas, se identificou a necessidade de tornar a visualização mais prática e dinâmica.  
+Então, foi implementado um **filtro por status das tarefas**, permitindo listar apenas as tarefas **"Em Progresso"** ou **"Concluídas"**.  
 
-No processo de desenvolvimento, foi realizada uma **mudança de escopo** para incluir uma nova funcionalidade além do CRUD básico de tarefas.
+Essa alteração foi registrada como **mudança de escopo**, pois amplia a funcionalidade original do projeto, indo além do CRUD básico proposto.  
+A implementação envolveu:
+- Criação de uma nova rota no Flask para filtrar tarefas por status;
+- Atualização dos testes automatizados para validar o novo comportamento;
+- Inclusão da nova feature no quadro Kanban e documentação no README.
 
-###  Antes da mudança
-O sistema permitia:
-- Criar novas tarefas  
-- Listar todas as tarefas existentes  
-- Atualizar informações de uma tarefa  
-- Excluir uma tarefa  
+Essa mudança demonstra a aplicação prática da **flexibilidade da metodologia ágil**, que permite ajustar o produto conforme as necessidades surgem durante o ciclo de desenvolvimento.
 
-###  Após a mudança
-Adicionou-se a funcionalidade de **filtrar tarefas por status**, permitindo visualizar separadamente:
-- To Do (A fazer)
-- In Progress  (Fazendo)
-- Done  (Feito)
+---
+---
 
-Essa mudança foi registrada como um novo card no **GitHub Projects**, acompanhada de um commit específico:
+## Histórico de Commits Semânticos
 
-> "feat: adicionar filtro de tarefas por status"
-
-Além disso, a nova funcionalidade foi testada com **Pytest** e validada automaticamente pelo **GitHub Actions**, garantindo o funcionamento correto da aplicação após a mudança.
+| Nº | Tipo | Descrição |
+|----|------|------------|
+| 1 | feat | Criar estrutura inicial do projeto Flask |
+| 2 | feat | Adicionar modelo de tarefas (Task) |
+| 3 | feat | Implementar CRUD básico de tarefas |
+| 4 | refactor | Melhorar organização das rotas e funções |
+| 5 | docs | Atualizar README com detalhes do projeto |
+| 6 | test | Adicionar testes automatizados com Pytest |
+| 7 | chore | Configurar pipeline de integração contínua |
+| 8 | fix | Corrigir erro na exclusão de tarefas |
+| 9 | feat | Adicionar filtro de tarefas por status (mudança de escopo) |
+| 10 | docs | Registrar mudança de escopo no README |
 
 ---
 
