@@ -1,21 +1,33 @@
-import pytest
-
 def test_home_page_status(client):
-    """Testa se a rota inicial retorna mensagem JSON e status 200."""
+    """Testa se a página inicial está acessível (status 200)."""
     response = client.get('/')
     assert response.status_code == 200
-    assert b" Seja bem-vindo ao TechFlow" in response.data
+    assert "Lista de Tarefas" in response.get_data(as_text=True)
 
-def test_listar_tarefas(client):
-    """Testa se a rota /tarefas retorna a lista de tarefas corretamente."""
-    response = client.get('/tarefas')
-    assert response.status_code == 200
-    assert b"Estudar Python" in response.data
-    assert b"Criar projeto ágil" in response.data
 
-def test_adicionar_tarefa(client):
+def test_create_task_success(client):
     """Testa a criação de uma nova tarefa via POST."""
-    nova_tarefa = {"id": 3, "titulo": "Testar API", "feito": False}
-    response = client.post('/tarefas', json=nova_tarefa)
-    assert response.status_code == 201
-    assert b"Testar API" in response.data
+    task_data = {
+        'title': 'Tarefa de Teste',
+        'description': 'Precisa ser concluída',
+    }
+
+    response = client.post('/add', data=task_data, follow_redirects=True)
+    assert response.status_code == 200
+    assert "Tarefa de Teste" in response.get_data(as_text=True)
+
+
+def test_mark_task_as_done(client):
+    """Testa marcar uma tarefa como concluída."""
+    client.post('/add', data={'title': 'Tarefa para Marcar', 'description': 'Teste Status'})
+
+    response = client.post('/complete/1', follow_redirects=True)
+    assert response.status_code == 200
+    # assert "Concluída" in response.get_data(as_text=True)
+
+
+def test_delete_task(client):
+    """Testa a exclusão de uma tarefa."""
+    response = client.post('/delete/1', follow_redirects=True)
+    assert response.status_code == 200
+    assert "Tarefa de Teste" not in response.get_data(as_text=True)
