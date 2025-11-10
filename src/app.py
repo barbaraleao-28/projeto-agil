@@ -1,9 +1,7 @@
-# app.py
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Lista de tarefas
 tarefas = [
     {"id": 1, "titulo": "Estudar Python", "feito": False},
     {"id": 2, "titulo": "Criar projeto ágil", "feito": False}
@@ -11,7 +9,7 @@ tarefas = [
 
 @app.route('/')
 def home():
-    return jsonify({"mensagem": "Bem-vinda ao TechFlow!"})
+    return jsonify({"mensagem": "Bem-vinda ao TechFlow"})  # removido o "!" final
 
 @app.route('/tarefas', methods=['GET'])
 def listar_tarefas():
