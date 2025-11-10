@@ -1,6 +1,6 @@
 name: Python Tests
 
-# Dispara o workflow em todo push para qualquer branch
+
 on: [push]
 
 jobs:
@@ -8,36 +8,29 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # Passo 1: Baixar o código do repositório
+      
       - name: 1. Checkout do Código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Passo 2: Configurar o ambiente Python
+      
       - name: 2. Configurar Python 3.10
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # Passo 3: Instalar Dependências e o Projeto (Solução para Importação)
-      - name: 3. Instalar Dependências e Projeto (Pacote 'src')
+      
+      - name: 3. Instalar Dependências
         run: |
           python -m pip install --upgrade pip
-          # Instala as dependências do requirements.txt
-          pip install -r requirements.txt
+          pip install -r requisitos.txt
           pip install pytest flake8
-          
-          # CRUCIAL: Instala a pasta 'src' como um pacote editável, 
-          # permitindo que o Pytest importe 'src.app'
-          pip install -e src/ 
 
-      # Passo 4: Rodar os Testes Automatizados (Pytest)
+      
       - name: 4. Rodar Testes Automatizados (Pytest)
         run: |
-          # Executa todos os testes na pasta 'tests/'
-          pytest tests/ 
+          pytest testes/ --maxfail=1 --disable-warnings -q
 
-      # Passo 5: Validar Qualidade do Código (Flake8)
+      
       - name: 5. Validar Qualidade do Código (Flake8)
         run: |
-          # O Flake8 verifica por erros e complexidade em src/ e tests/
-          flake8 src/ tests/ --count --max-complexity=10 --max-line-length=127 --exit-zero
+          flake8 src/ testes/ --count --max-complexity=10 --max-line-length=127 --exit-zero
